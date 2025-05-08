@@ -33,5 +33,16 @@
 
 (provide 'datalog-mode)
 
+(eval-when-compile
+  (require 'rx))
+
+;; syntax highlighting
+(defconst datalog--highlight
+  (let ((keywords '(".decl" ".input" ".output" ".type"))
+        (types '("symbol" "number")))
+     `(((,(rx-to-string `(: (or ,@keywords))) 0 font-lock-keyword-face)
+       ("\\([[:word:]]+\\)\s*(" 1 font-lock-function-name-face)
+       (,(rx-to-string `(: (or ,@types))) 0 font-lock-type-face)))))
+
 ;;; datalog-mode.el ends here
 
